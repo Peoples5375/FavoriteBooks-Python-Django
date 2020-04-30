@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>View Book</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container row my-row">
+        <div class="col-md-6">
+            <div>
+                <h1>Book: {{editbook.title}}</h1>
+                <p>Description: {{editbook.desc}}</p>
+                <p>Uploaded by : {{editbook.uploaded_by.first_name}}</p>
+
+            </div>
+            {% if editbook.uploaded_by.id == request.session.userid %}
+            <div>
+                <form action="/update_book/{{editbook.id}}" method="POST">
+                    {% csrf_token %}
+                    <label for="description"> Description : </label>
+                    <input type="text" name="edit_desc">
+                    <input type="submit">
+                </form>
+            </div>
+            
+            {% endif %}
+            {% if wholeuser in editbook.users_favorite.all  %}
+            <a href="/unfav_book/{{editbook.id}}" class="btn btn-success"> Unfavorite</a>
+            {% else %}
+            <a href="/fav_book/{{editbook.id}}" class="btn btn-success"> Favorite</a>
+            {% endif %}
+        </div>
+        <div class="col-md-5">
+
+            <a href="/logout" class="btn btn-danger" role="button">Logout!</a>
+            
+            <h5>People who Favorite This Book.</h5>
+            {% for fav in editbook.users_favorite.all %}
+                <p>{{fav.first_name}}</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

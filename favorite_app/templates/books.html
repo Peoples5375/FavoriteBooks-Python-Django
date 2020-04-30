@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="row my-row">
+                <h1 class="col-md-8">Welcome {{ theuser.first_name }}</h1>
+                <p class="col-md-4"><a href="/logout" class="btn btn-danger" role="button">Logout!</a></p>
+            </div>
+        </header>
+        <p></p>
+        <div class="row my-row">
+            <div class="col-md-6">
+                <form action="/create_book" method="POST">
+                    {% csrf_token %}
+                    <label for="title">Title : </label>
+                    <input type="text" name="title">
+                    <label for="desc">Description : </label>
+                    <input type="text" name="desc-text">
+
+                    <input type="submit" class="btn btn-success">
+                </form>
+            </div>
+        
+            <div class="col-md-6">
+                <h6>List of Books</h6>
+                <ul>
+                {% for book in allbooks %}
+                
+                    <li><a href="/books/{{book.id}}">{{book.title}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        <div>
+    </div>
+</body>
+</html>
